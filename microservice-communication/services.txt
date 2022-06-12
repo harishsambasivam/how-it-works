@@ -1,0 +1,5 @@
+
+
+
+user request -> cart service -> product service (to create a product)
+                             -> payment service  
