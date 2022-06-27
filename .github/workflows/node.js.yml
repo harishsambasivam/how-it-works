@@ -18,7 +18,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        working-directory: ./k6/services/userSubscription
+        cache-dependencies-path: /k6/services/userSubscription
+    - run: cd  /k6/services/userSubscription
     - run: npm ci
     - run: npm run build --if-present
     
