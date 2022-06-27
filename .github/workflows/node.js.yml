@@ -17,20 +17,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
+      working-directory: ./k6/services/userSubscription
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd k6/services/userSubscription
-    - run: npm ci
-    - run: npm run build --if-present
+      run: | 
+        npm ci
+        npm run build --if-present
     
     - name: Run k6 local test
       uses: grafana/k6-action@v0.2.0
       with:
-        filename: k6/tests/k6.js
-        flags: --vus 50 --duration 20s
+        filename: /k6/tests/k6.js
+        flags: --vus 10 --duration 20s --env testType=smoke
         cloud: true
         token: ${{ secrets.K6_CLOUD_API_TOKEN }}
-  
+     
   
