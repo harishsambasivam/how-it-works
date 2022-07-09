@@ -12,8 +12,8 @@ Globals:
     Environment:
       Variables:
             NODE_ENV : NODE_ENV
-            PG_NUCLEUS_URI : "postgres://postgres:postgres@postgres-lambda-poc.c5fgtmn5vpon.ap-south-1.rds.amazonaws.com:5432/users" 
-            RDS_PROXY: "postgres://postgres:postgres@postgres-lambda-poc.c5fgtmn5vpon.ap-south-1.rds.amazonaws.com:5432/users"
+            PG_NUCLEUS_URI : "" 
+            RDS_PROXY: ""
 Resources:
   getUsersFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
