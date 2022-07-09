@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "db-connections-poc"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1k97cb1zs149"
+s3_prefix = "db-connections-poc"
+region = "ap-south-1"
+profile = "rnd"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

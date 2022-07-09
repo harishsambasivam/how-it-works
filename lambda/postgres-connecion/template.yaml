@@ -1,0 +1,120 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  db-connections-poc
+
+  Sample SAM Template for db-connections-poc
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+    Environment:
+      Variables:
+            NODE_ENV : NODE_ENV
+            PG_NUCLEUS_URI : "postgres://postgres:postgres@postgres-lambda-poc.c5fgtmn5vpon.ap-south-1.rds.amazonaws.com:5432/users" 
+            RDS_PROXY: "postgres://postgres:postgres@postgres-lambda-poc.c5fgtmn5vpon.ap-south-1.rds.amazonaws.com:5432/users"
+Resources:
+  getUsersFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: getUsersBestPractice/
+      Handler: index.handler
+      Runtime: nodejs16.x
+      VpcConfig:
+        SecurityGroupIds: ["sg-d28ee5ae"]
+        SubnetIds: ["subnet-0aea8471","subnet-7a897f11","subnet-4060470c"]
+      Architectures:
+        - x86_64
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /getUsers
+            Method: get
+
+  getUsersWithPoolConfig:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: getUsersWithSequelizeSuggestions/
+      Handler: index.handler
+      Runtime: nodejs16.x
+      VpcConfig:
+        SecurityGroupIds: ["sg-d28ee5ae"]
+        SubnetIds: ["subnet-0aea8471","subnet-7a897f11","subnet-4060470c"]
+      Architectures:
+        - x86_64
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /getUsers/poolconfig
+            Method: get
+
+  getUsersWithSequelizeSuggestions:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: getUsersWithSequelizeSuggestions/
+      Handler: index.handler
+      Runtime: nodejs16.x
+      VpcConfig:
+        SecurityGroupIds: ["sg-d28ee5ae"]
+        SubnetIds: ["subnet-0aea8471","subnet-7a897f11","subnet-4060470c"]
+      Architectures:
+        - x86_64
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /getUsers/suggestions
+            Method: get
+
+  getUsersWithLeakFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: getUsersWithLeaks/
+      Handler: index.handler
+      Runtime: nodejs16.x
+      VpcConfig:
+        SecurityGroupIds: ["sg-d28ee5ae"]
+        SubnetIds: ["subnet-0aea8471","subnet-7a897f11","subnet-4060470c"]
+      Architectures:
+        - x86_64
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /getUsers/leaks
+            Method: get
+
+
+  getUsersWithRDSProxy:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: getUsersWithRDSProxy/
+      Handler: index.handler
+      Runtime: nodejs16.x
+      VpcConfig:
+        SecurityGroupIds: ["sg-d28ee5ae"]
+        SubnetIds: ["subnet-0aea8471","subnet-7a897f11","subnet-4060470c"]
+      Architectures:
+        - x86_64
+
+  getUsersWithCallback:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: getUsersWithCallback/
+      Handler: index.handler
+      Runtime: nodejs16.x
+      VpcConfig:
+        SecurityGroupIds: ["sg-d28ee5ae"]
+        SubnetIds: ["subnet-0aea8471","subnet-7a897f11","subnet-4060470c"]
+      Architectures:
+        - x86_64
+
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /getUsers/rdsproxy
+            Method: get
