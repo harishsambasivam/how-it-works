@@ -13,6 +13,22 @@ app.listen(PORT, async () => {
     logger.info(`Service started on PORT ${PORT}`);
 });
 
+app.get("/", (req,res) => {
+    console.log("Healthcheck");
+    res.status(200).send("Service is up and running");
+})
+
+app.use(express.json())
+
 app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/orders", ordersRouter);
+
+
+app.use((err,req,res,next) => {
+    logger.err(err);
+    res.status(500).json({
+        status: "error",
+        message: err.message
+    })
+})
