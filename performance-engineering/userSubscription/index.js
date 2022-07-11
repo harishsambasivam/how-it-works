@@ -26,7 +26,7 @@ app.use("/orders", ordersRouter);
 
 
 app.use((err,req,res,next) => {
-    logger.err(err);
+    logger.error(err);
     res.status(500).json({
         status: "error",
         message: err.message
