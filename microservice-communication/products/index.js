@@ -1,34 +1,20 @@
 const express = require('express');
 const app = express();
 const { faker } = require("@faker-js/faker");
+const pino = require("pino");
 
-
-const { initLogger } = require('@harishsambasivam/pino-logger-poc');
-
-const { contextMiddleware, correlationMiddleware, logger } = initLogger("development", {
-    pretty: true,
-    // targetFile: "/Users/harish/Documents/Learnings/nodejs/microservice-communication/logs/pino.log",
-    redact: {
-        paths: ['message.cardNo'],
-        // remove: true,
-        censor: '**GDPR COMPLIANT**'
-    },
-    logProps: {
-        service: "products",
-        env: "development"
+const logger = pino({
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true
+      }
     }
-});
-
-app.use(correlationMiddleware());
-app.use(contextMiddleware(logger));
+  });
 
 app.listen(process.env.PRODUCT_SERVICE_PORT || 4500, () => {
     logger.info(`Server running on PORT ${process.env.PRODUCT_SERVICE_PORT || 4500}`);
 })
-
-
-
-const childLogger = logger.child({ "module": "stock management","service":"products", "env":"development" });
 
 const createProduct = () => {
     return {
@@ -40,8 +26,7 @@ const createProduct = () => {
 
 app.get("/product/:id", (req, res) => {
 
-
-    childLogger.info("GET /product/:id");
+    logger.info( { requestId: req.headers["x-byjus-correlation-id"]},"GET /product/:id");
     try {
 
         if (req?.query?.productError === "true") {
@@ -51,14 +36,14 @@ app.get("/product/:id", (req, res) => {
         }
 
         let data = createProduct();
-        childLogger.info(`Created Product: ${JSON.stringify(data)}`);
+        logger.info( { requestId: req.headers["x-byjus-correlation-id"]},`Created Product: ${JSON.stringify(data)}`);
         return res.status(200).json({
             status: "OK",
             data
         })
 
     } catch (err) {
-        childLogger.error(err);
+        logger.error( { requestId: req.headers["x-byjus-correlation-id"]}, err);
         const response = {
             statusCode: 200,
             status: "ERROR",
