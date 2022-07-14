@@ -9,6 +9,9 @@ const productRouter = require("./controller/product");
 const ordersRouter = require("./controller/order");
 const PORT = 3000;
 
+app.set('trust proxy', 2);
+
+
 app.listen(PORT, async () => {
     logger.info(`Service started on PORT ${PORT}`);
 });
@@ -23,6 +26,7 @@ app.use(express.json())
 app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/orders", ordersRouter);
+
 
 
 app.use((err,req,res,next) => {
