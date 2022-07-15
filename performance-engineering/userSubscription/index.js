@@ -12,8 +12,8 @@ const PORT = 3000;
 app.set('trust proxy', 2);
 
 
-app.listen(PORT, async () => {
-    logger.info(`Service started on PORT ${PORT}`);
+app.listen(process.env.PORT, async () => {
+    logger.info(`Service started on PORT ${process.env.PORT}`);
 });
 
 app.get("/", (req,res) => {

@@ -5,7 +5,7 @@ const saltRounds = 10;
 const Sequelize = require("sequelize");
 const pgEncryptKey = "TjWnZr4u7x!A%D*G-JaNdRgUkXp2s5v8";
 
-module.exports.addUser = async (userData) => {
+const addUser = async (userData) => {
     logger.info("Add User");
     const { password, username, address, accountNumber, pin, creditCardNumber, cvv, creditCardHolder, walletAddress, PAN, aadharNumber, passportNumber, drivingLicenseNumber, dateOfBirth, voterId, age } = userData;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -31,7 +31,7 @@ module.exports.addUser = async (userData) => {
     return user;
 };
 
-module.exports.getUser = async (username) => {
+const getUser = async (username) => {
     logger.info("Get User");
     const user = await User.findAll({
         attributes: [
@@ -159,3 +159,40 @@ module.exports.getUser = async (username) => {
     });
     return user;
 };
+
+
+const {faker} = require("@faker-js/faker");
+
+async function foo(){
+    for(let i=0;i<20000;i++){
+          const username = faker.name.findName();
+          const payload = {
+            username,
+            address: faker.address.streetAddress(true),
+            password: faker.internet.password(20),
+            accountNumber: faker.finance.account(),
+            pin: faker.finance.ethereumAddress(),
+            creditCardNumber: faker.finance.creditCardNumber(),
+            cvv: faker.finance.creditCardCVV(),
+            creditCardHolder: faker.name.findName(),
+            walletAddress: faker.finance.ethereumAddress(),
+            PAN: faker.finance.creditCardNumber(),
+            aadharNumber: faker.finance.creditCardNumber(),
+            drivingLicenseNumber: faker.finance.creditCardNumber(),
+            voterId: faker.finance.creditCardNumber(),
+            passportNumber: faker.finance.creditCardNumber(),
+            age: faker.finance.creditCardNumber(),
+            dateOfBirth: faker.finance.creditCardNumber(),
+          };
+          await addUser(payload);
+    }
+}
+
+
+foo();
+
+
+module.exports = {
+  addUser,
+  getUser
+}
