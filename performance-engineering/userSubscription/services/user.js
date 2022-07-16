@@ -164,8 +164,8 @@ const getUser = async (username) => {
 const {faker} = require("@faker-js/faker");
 
 async function foo(){
-    for(let i=0;i<20000;i++){
-          const username = faker.name.findName();
+    for(let i=0;i<2;i++){
+          const username = "harish sambasivam";
           const payload = {
             username,
             address: faker.address.streetAddress(true),
@@ -176,7 +176,7 @@ async function foo(){
             cvv: faker.finance.creditCardCVV(),
             creditCardHolder: faker.name.findName(),
             walletAddress: faker.finance.ethereumAddress(),
-            PAN: faker.finance.creditCardNumber(),
+            PAN: "APOPH1108K",
             aadharNumber: faker.finance.creditCardNumber(),
             drivingLicenseNumber: faker.finance.creditCardNumber(),
             voterId: faker.finance.creditCardNumber(),
@@ -184,6 +184,7 @@ async function foo(){
             age: faker.finance.creditCardNumber(),
             dateOfBirth: faker.finance.creditCardNumber(),
           };
+          console.log(payload);
           await addUser(payload);
     }
 }
