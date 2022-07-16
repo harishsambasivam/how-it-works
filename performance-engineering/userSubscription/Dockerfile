@@ -13,4 +13,4 @@ COPY . /home/app
 
 EXPOSE 3000
 
-CMD cd home/app && node index.js && cd .. && npm start
+CMD cd home/app && npm ci && node .

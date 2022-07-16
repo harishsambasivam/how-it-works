@@ -20,19 +20,7 @@ const hpropagate = require("hpropagate");
 const { uuid } = require('uuidv4');
 
 
-// correlation middleware
-app.use((req,res,next) => {
-    if(!req.headers['x-byjus-correlation-id']) {
-       if(!req.headers['x-byjus-correlation-id']) req.headers['x-byjus-correlation-id'] = uuid();
-    }
-    const { tracer } = hpropagate;
-    tracer.currentTrace.context.set('x-byjus-correlation-id', req.headers['x-byjus-correlation-id'] );
-    next();
-});
-
-
 hpropagate({
-    setAndPropagateCorrelationId: false,
     headersToPropagate: ["x-byjus-correlation-id"],
     propagateInResponses: true,
 });
