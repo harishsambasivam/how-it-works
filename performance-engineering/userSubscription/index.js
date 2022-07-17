@@ -8,12 +8,17 @@ const userRouter = require("./controller/user");
 const productRouter = require("./controller/product");
 const ordersRouter = require("./controller/order");
 const PORT = 3000;
+const tracer = require('dd-trace');
+
+tracer.init({
+    runtimeMetrics: true
+});
 
 app.set('trust proxy', 2);
 
 
-app.listen(process.env.PORT, async () => {
-    logger.info(`Service started on PORT ${process.env.PORT}`);
+app.listen(PORT, async () => {
+    logger.info(`Service started on PORT ${PORT}`);
 });
 
 app.get("/", (req,res) => {
