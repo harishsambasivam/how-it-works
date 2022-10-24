@@ -50,6 +50,11 @@ try {
             execTicksAndCallbacks();
         })
 
+        immediates.forEach(callback => {
+            callback();
+            execTicksAndCallbacks();
+        })
+
         closeCallbacks.forEach(callback => {
             callback();
             execTicksAndCallbacks();
